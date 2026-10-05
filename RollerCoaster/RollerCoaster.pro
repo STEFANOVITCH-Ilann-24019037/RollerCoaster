@@ -4,4 +4,10 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.cpp
+        car.cpp \
+        main.cpp \
+        passenger.cpp
+
+HEADERS += \
+    car.h \
+    passenger.h
