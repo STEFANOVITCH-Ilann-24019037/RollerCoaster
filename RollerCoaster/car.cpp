@@ -23,3 +23,7 @@ void Car::unload(){
     cout << "Fin du tour, ouverture pour descendre" << endl;
 }
 
+void Car::lancer_tour(){
+    boardQueue.realise(C);
+}
+
