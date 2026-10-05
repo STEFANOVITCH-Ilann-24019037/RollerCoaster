@@ -23,6 +23,3 @@ void Car::unload(){
     cout << "Fin du tour, ouverture pour descendre" << endl;
 }
 
-void Car::load{
-
-}
