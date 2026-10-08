@@ -29,9 +29,11 @@ int main()
     vector<thread> mes_passagers;
     int nb_passagers = 10;
 
-    for(int j=0; j < nb_passagers; ++j)
-        mes_passagers.push_back(thread());
+    vector<passager>liste_passagers;
 
+    for(int j=0; j < nb_passagers; ++j)
+        mes_passagers.push_back(thread(&Passagers::faire_un_toure, &liste_passagers[j]));
+    for (thread & th : mes_passagers) th.join();
 
 
 
