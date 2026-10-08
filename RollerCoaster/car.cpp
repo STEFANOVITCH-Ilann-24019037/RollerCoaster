@@ -1,4 +1,5 @@
 #include "car.h"
+#include <mutex>
 
 using namespace std;
 
@@ -24,6 +25,9 @@ void Car::unload(){
 }
 
 void Car::lancer_tour(){
-    boardQueue.realise(C);
+    boardQueue.release();
 }
+
+
+
 
