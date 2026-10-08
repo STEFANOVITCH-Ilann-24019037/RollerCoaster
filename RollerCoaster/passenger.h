@@ -1,10 +1,27 @@
-#ifndef
-#define
+#ifndef PASSENGER_H
+#define PASSENGER_H
 
-class passenger
-{
-public:
-    passenger();
+#include <string>
+
+using namespace std;
+
+class car;
+
+enum class EtatPassager {
+    Board,
+    Unboard
 };
 
-#endif //
+class passenger {
+public:
+    string nom;
+    EtatPassager etat;
+
+    passenger(string n);
+
+    void board();
+    void unboard();
+    void vivre(car& voiture);
+};
+
+#endif

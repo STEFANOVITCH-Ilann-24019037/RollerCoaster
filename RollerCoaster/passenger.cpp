@@ -1,15 +1,21 @@
+#include "passenger.h"
+#include "car.h"
 #include <iostream>
-#include <vector>
-#include <string>
 
-enum class Etat
-{
-    Board,
-    Unboard
-};
-class Passenger {
-public:
-    std::string nom;
-    Etat etat;
-    Passenger(std::string n) : nom(n) {}
-};
+using namespace std;
+
+passenger::passenger(string n) : nom(n), etat(EtatPassager::Unboard) {}
+
+void passenger::board() {
+    etat = EtatPassager::Board;
+    cout << "[BOARD] " << nom << " monte." << endl;
+}
+
+void passenger::unboard() {
+    etat = EtatPassager::Unboard;
+    cout << "[UNBOARD] " << nom << " descend." << endl;
+}
+
+void passenger::vivre(car& voiture) {
+    voiture.arriver(this);
+}

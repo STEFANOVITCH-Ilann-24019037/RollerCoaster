@@ -1,49 +1,59 @@
+#include "car.h"
 #include <iostream>
-#include <vector>
-#include <string>
+#include <thread>
+#include <chrono>
 
-// Énumération pour l'état (eta)
-enum class Etat {
-    LOAD,
-    RUN,
-    UNLOAD
-};
+using namespace std;
 
-class Car {
-private:
-    Etat eta;
-    int capa;
-    std::vector<passenger> passengers;
+car::car(int capacite, int nbTours) : eta(EtatCar::UNLOAD), capa(capacite), nbTours(nbTours) {}
 
-public:
-    Car(int capacite) : eta(Etat::LOAD), capa(capacite) {}
-
-    void load(std::vector<passenger>& fileDAttente) {
-        eta = Etat::LOAD;
-
-        while (passengers.size() < capa && !fileDAttente.empty()) {
-            passengers.push_back(fileDAttente.front());
-            fileDAttente.erase(fileDAttente.begin());
-        }
+void car::rouler() {
+    for (int i = 0; i < nbTours; i++) {
+        load();
+        run();
+        unload();
     }
+}
 
-    void run() {
-        if (passengers.size() == capa) {
-            eta = Etat::RUN;
-            std::cout << "[RUN] La voiture est pleine, départ." << std::endl;
-        } else {
-            std::cout << "[ERREUR] La voiture n'est pas pleine, impossible de lancer le RUN." << std::endl;
+void car::arriver(passenger* p) {
+    lock_guard<mutex> lock(mtx);
+    fileDAttente.push_back(p);
+    cout << "[FILE] " << p->nom << " fait la queue." << endl;
+    cv.notify_one();
+}
+
+void car::load() {
+    unique_lock<mutex> lock(mtx);
+    eta = EtatCar::LOAD;
+    cout << "[LOAD] Chargement..." << endl;
+
+    while ((int)passengers.size() < capa) {
+        while (fileDAttente.empty()) {
+            cv.wait(lock);
         }
+        passenger* p = fileDAttente.front();
+        fileDAttente.erase(fileDAttente.begin());
+        p->board();
+        passengers.push_back(p);
     }
+}
 
-    void unload(std::vector<Passenger>& destination) {
-        eta = Etat::UNLOAD;
-
-        for (const auto& p : passengers) {
-            destination.push_back(p);
-        }
-
-        passengers.clear();
-        std::cout << "[UNLOAD] Déchargement terminé." << std::endl;
+void car::run() {
+    {
+        lock_guard<mutex> lock(mtx);
+        eta = EtatCar::RUN;
+        cout << "[RUN] La voiture est pleine, depart." << endl;
     }
-};
+    this_thread::sleep_for(chrono::milliseconds(5000));
+}
+
+void car::unload() {
+    lock_guard<mutex> lock(mtx);
+    eta = EtatCar::UNLOAD;
+    cout << "[UNLOAD] Dechargement..." << endl;
+
+    for (passenger* p : passengers) {
+        p->unboard();
+    }
+    passengers.clear();
+}
