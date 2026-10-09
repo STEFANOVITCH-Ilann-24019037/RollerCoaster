@@ -17,6 +17,9 @@ private:
     mutex& mut_boards;
     mutex& mut_unboards;
 
+    // ces mutex vont servire a creer l'attente infinie
+    mutex& mut_billet;
+    mutex& mut_portillon;
 
     int& boarders;
     int& unboarders;
@@ -29,6 +32,8 @@ public:
               counting_semaphore<500>& ref_allAshore,
               mutex& ref_mut_boards,
               mutex& ref_mut_unboards,
+              mutex& ref_mut_billet,
+              mutex& ref_mut_portillon,
               int& ref_boarders,
               int& ref_unboarders);
 

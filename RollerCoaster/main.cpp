@@ -9,8 +9,8 @@
 using namespace std;
 
 int main() {
-    int C = 14;
-    int nb_passagers = 78;
+    int C = 4;
+    int nb_passagers = 12;
 
     counting_semaphore<500> boardQueue(0);
     counting_semaphore<500> unboardQueue(0);
@@ -19,6 +19,11 @@ int main() {
 
     mutex mut_boards;
     mutex mut_unboards;
+
+    // les mutex du deadlock
+    mutex mut_billet;
+    mutex mut_portillon;
+
     int boarders = 0;
     int unboarders = 0;
 
@@ -30,7 +35,9 @@ int main() {
 
     for(int j = 0; j < nb_passagers; ++j) {
         liste_passagers.emplace_back(j, C, boardQueue, unboardQueue, allAboard, allAshore,
-                                     mut_boards, mut_unboards, boarders, unboarders);
+                                     mut_boards, mut_unboards,
+                                     mut_billet, mut_portillon,
+                                     boarders, unboarders);
     }
 
     vector<thread> mes_passagers;
