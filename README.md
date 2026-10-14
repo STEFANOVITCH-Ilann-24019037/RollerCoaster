@@ -6,7 +6,7 @@
 
 **RETOUR AU PORTUGAL MOINS D'UNE HEURE PLUS TARD**
 
-Une expérience **INÉDITE, MAGIQUE ET ABSOLUMENT DÉMENTIELLE** qui vous fera ressentir la vitesse phénoménale d'un tir de mortier utilisé le **17 octobre** !
+Une expérience **INÉDITE, MAGIQUE ET ABSOLUMENT DÉMENTIELLE** qui vous fera ressentir la vitesse phénoménale du **son lui même** !
 
 Des sensations extrêmes !
 
