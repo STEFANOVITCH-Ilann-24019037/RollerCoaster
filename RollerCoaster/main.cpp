@@ -23,13 +23,13 @@ int main() {
     deque<train> trains ;
 
     voyageurs.reserve(NB_VOYAGEURS);
-
     for (u_char i = 0; i < NB_TRAINS; ++i) {
         trains.emplace_back(CAPACITE, NB_TOURS, "train " + to_string(i + 1));
     }
 
     for (u_char i = 0; i < NB_VOYAGEURS; ++i) {
         voyageurs.emplace_back("voyageur " + to_string(i + 1));
+
     }
 
     vector<thread> threads;
