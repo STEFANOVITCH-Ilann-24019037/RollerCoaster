@@ -17,7 +17,7 @@ void train::rouler() {
 }
 
 void train::load() {
-    cout << "\n[TRAIN DE LA HYPE] Le train approche du Portugal..." << endl;
+    cout << "\n[TRAIN DE LA HYPE] Le train approche du Portugal...." << endl;
 
     // ici le sleep fait en sorte que le train prend du retard pour que le voyageur prend la clé
     this_thread::sleep_for(chrono::milliseconds(100));

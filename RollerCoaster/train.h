@@ -20,10 +20,10 @@ private:
     u_char capa;
     u_char nbTours;
 
-    counting_semaphore<500> attente_quai{0};
-    counting_semaphore<500> attente_descente{0};
-    counting_semaphore<500> train_plein{0};
-    counting_semaphore<500> train_vide{0};
+    counting_semaphore<30> attente_quai{0};
+    counting_semaphore<30> attente_descente{0};
+    counting_semaphore<30> train_plein{0};
+    counting_semaphore<30> train_vide{0};
 
     mutex mtx_compteurs;
     u_char boarders = 0;
