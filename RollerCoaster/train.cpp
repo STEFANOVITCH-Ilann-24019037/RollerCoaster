@@ -5,10 +5,10 @@
 
 using namespace std;
 
-train::train(int capacite, int tours) : eta(EtatTrain::UNLOAD), capa(capacite), nbTours(tours) {}
+train::train(u_char capacite, u_char tours, string nom) : eta(EtatTrain::UNLOAD), capa(capacite), nbTours(tours) ,nom(nom) {}
 
 void train::rouler() {
-    for (int i = 0; i < nbTours; i++) {
+    for (u_char i = 0; i < nbTours; i++) {
         load();
         run();
         unload();
@@ -18,7 +18,7 @@ void train::rouler() {
 
 void train::load() {
     eta = EtatTrain::LOAD;
-    cout << "\n[TRAIN DE LA HYPE] Portes ouvertes au PORTUGAL ! Embarquement immédiat !" << endl;
+    cout << "\n[" <<this->nom<<"] Portes ouvertes au PORTUGAL ! Embarquement immédiat !" << endl;
 
     // le train laisse les gens monter
     attente_quai.release(capa);
@@ -28,13 +28,13 @@ void train::load() {
 
 void train::run() {
     eta = EtatTrain::RUN;
-    cout << "[TRAIN DE LA HYPE] VITESSE DÉFIANT LES LOIS DE LA LOGIQUE ATTEINTE ! TOUR DE L'EUROPE EN COURS !!!" << endl;
+    cout << "[" <<this->nom<<"] VITESSE DÉFIANT LES LOIS DE LA LOGIQUE ATTEINTE ! TOUR DE L'EUROPE EN COURS !!!" << endl;
     this_thread::sleep_for(chrono::milliseconds(2000));
 }
 
 void train::unload() {
     eta = EtatTrain::UNLOAD;
-    cout << "[TRAIN DE LA HYPE] Retour au PORTUGAL en moins d'une heure. Tout le monde descend !" << endl;
+    cout << "[" <<this->nom<<"] Retour au PORTUGAL en moins d'une heure. Tout le monde descend !" << endl;
 
     attente_descente.release(capa);
     train_vide.acquire();

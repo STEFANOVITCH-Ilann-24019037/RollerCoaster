@@ -17,8 +17,9 @@ enum class EtatTrain {
 class train {
 private:
     EtatTrain eta;
-    int capa;
-    int nbTours;
+    u_char capa;
+    u_char nbTours;
+    string nom;
 
     //ici on utilise la template de c++20 qui gère les condition
     counting_semaphore<500> attente_quai{0};
@@ -32,7 +33,7 @@ private:
     int unboarders = 0;
 
 public:
-    train(int capacite, int nbTours);
+    train(u_char capacite, u_char nbTours,string nom);
 
     void rouler();
     void load();
