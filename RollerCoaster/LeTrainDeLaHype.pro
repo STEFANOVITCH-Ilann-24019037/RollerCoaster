@@ -2,12 +2,13 @@ TEMPLATE = app
 CONFIG += console c++20
 CONFIG -= app_bundle
 CONFIG -= qt
+LIBS += -pthread
 
 SOURCES += \
-        car.cpp \
+        train.cpp \
         main.cpp \
-        passenger.cpp
+        voyageur.cpp
 
 HEADERS += \
-    car.h \
-    passenger.h
+    train.h \
+    voyageur.h

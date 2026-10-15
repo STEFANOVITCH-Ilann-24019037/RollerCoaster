@@ -2,32 +2,41 @@
 #include <vector>
 #include <thread>
 #include <string>
-#include "car.h"
-#include "passenger.h"
+#include "train.h"
+#include "voyageur.h"
 
 using namespace std;
 
 int main() {
+    cout << "          TRAIN DE LA HYYYYYYYYYYYYYPE EN AVANT !!        " << endl;
+
+
     const int CAPACITE = 3;
     const int NB_TOURS = 2;
+    const int NB_VOYAGEURS = CAPACITE * NB_TOURS;
 
-    car voiture(CAPACITE, NB_TOURS);
+    train le_train(CAPACITE, NB_TOURS);
 
-    vector<passenger> passagers;
-    for (int i = 0; i < CAPACITE * NB_TOURS; i++) {
-        passagers.emplace_back("P" + to_string(i + 1));
+    vector<voyageur> voyageurs;
+    voyageurs.reserve(NB_VOYAGEURS);
+
+    for (int i = 0; i < NB_VOYAGEURS; i++) {
+        voyageurs.emplace_back("Fan_N" + to_string(i + 1));
     }
 
     vector<thread> threads;
-    threads.emplace_back(&car::rouler, &voiture);
-    for (auto& p : passagers) {
-        threads.emplace_back(&passenger::vivre, &p, ref(voiture));
+
+    // Lancement du thread du train
+    threads.emplace_back(&train::rouler, &le_train);
+
+    // Lancement des threads des voyageurs
+    for (auto& v : voyageurs) {
+        threads.emplace_back(&voyageur::vivre, &v, ref(le_train));
     }
 
     for (auto& t : threads) {
         t.join();
     }
 
-    cout << "Fin." << endl;
     return 0;
 }
