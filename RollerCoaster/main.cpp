@@ -21,7 +21,7 @@ int main() {
     voyageurs.reserve(NB_VOYAGEURS);
 
     for (int i = 0; i < NB_VOYAGEURS; i++) {
-        voyageurs.emplace_back("voyageur " + to_string(i + 1));
+        voyageurs.emplace_back("voyageur" + to_string(i + 1));
     }
 
     vector<thread> threads;
