@@ -5,10 +5,10 @@
 
 using namespace std;
 
-train::train(int capacite, int tours) : eta(EtatTrain::UNLOAD), capa(capacite), nbTours(tours) {}
+train::train(u_char capacite, u_char tours) : eta(EtatTrain::UNLOAD), capa(capacite), nbTours(tours) {}
 
 void train::rouler() {
-    for (int i = 0; i < nbTours; i++) {
+    for (u_char i = 0; i < nbTours; i++) {
         load();
         run();
         unload();
@@ -17,29 +17,36 @@ void train::rouler() {
 }
 
 void train::load() {
-    eta = EtatTrain::LOAD;
-    cout << "\n[TRAIN DE LA HYPE] Portes ouvertes au PORTUGAL ! Embarquement immédiat !" << endl;
+    cout << "\n[TRAIN DE LA HYPE] Le train approche du Portugal..." << endl;
 
-    // le train laisse les gens monter
+    // ici le sleep fait en sorte que le train prend du retard pour que le voyageur prend la clé
+    this_thread::sleep_for(chrono::milliseconds(100));
+
+    cout << "[TRAIN DE LA HYPE] Le train arrive, il faut la clé du sas pour ouvrir !!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
+
+    // Le train essaie de prendre la clé
+    lock_guard<mutex> lock(mtx_sas);
+
+    eta = EtatTrain::LOAD;
+    cout << "[TRAIN DE LA HYPE] Portes ouvertes au PORTUGAL !! Embarquement immédiat !!!" << endl;
+
     attente_quai.release(capa);
-    // le train reste a l'arret jusqu'a se que le dernier passager signal que c'est plein
     train_plein.acquire();
 }
 
 void train::run() {
     eta = EtatTrain::RUN;
-    cout << "[TRAIN DE LA HYPE] VITESSE DÉFIANT LES LOIS DE LA LOGIQUE ATTEINTE ! TOUR DE L'EUROPE EN COURS !!!" << endl;
+    cout << "[TRAIN DE LA HYPE] VITESSE DÉFIANT LES LOIS DE LA LOGIQUE ATTEu_charE !" << endl;
     this_thread::sleep_for(chrono::milliseconds(2000));
 }
 
 void train::unload() {
     eta = EtatTrain::UNLOAD;
-    cout << "[TRAIN DE LA HYPE] Retour au PORTUGAL en moins d'une heure. Tout le monde descend !" << endl;
+    cout << "[TRAIN DE LA HYPE] Retour au PORTUGAL. Tout le monde descend !" << endl;
 
     attente_descente.release(capa);
     train_vide.acquire();
 }
-
 
 void train::attendre_ouverture() {
     attente_quai.acquire();

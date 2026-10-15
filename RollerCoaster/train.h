@@ -17,28 +17,28 @@ enum class EtatTrain {
 class train {
 private:
     EtatTrain eta;
-    int capa;
-    int nbTours;
+    u_char capa;
+    u_char nbTours;
 
-    //ici on utilise la template de c++20 qui gère les condition
     counting_semaphore<500> attente_quai{0};
     counting_semaphore<500> attente_descente{0};
     counting_semaphore<500> train_plein{0};
     counting_semaphore<500> train_vide{0};
 
-    // combien de personnes sont montées ou descendues
     mutex mtx_compteurs;
-    int boarders = 0;
-    int unboarders = 0;
+    u_char boarders = 0;
+    u_char unboarders = 0;
 
 public:
-    train(int capacite, int nbTours);
+    // mutex que le voyageur va bloquer
+    mutex mtx_sas;
+
+    train(u_char capacite, u_char nbTours);
 
     void rouler();
     void load();
     void run();
     void unload();
-
 
     void attendre_ouverture();
     void passager_monte();
