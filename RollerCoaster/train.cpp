@@ -24,7 +24,7 @@ void train::load() {
 
     cout << "[TRAIN DE LA HYPE] Le train arrive, il faut la clé du sas pour ouvrir !!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
 
-    // Le train essaie de prendre la clé
+    // le train essaie de prendre la clé
     lock_guard<mutex> lock(mtx_sas);
 
     eta = EtatTrain::LOAD;

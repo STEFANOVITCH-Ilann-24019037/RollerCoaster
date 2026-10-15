@@ -27,11 +27,11 @@ int main() {
     vector<thread> threads;
 
 
-    // Lancement des threads des voyageurs
+    // on lance les threads des voyageurs
     for (auto& v : voyageurs) {
         threads.emplace_back(&voyageur::vivre, &v, ref(le_train));
     }
-    // Lancement du thread du train
+    // on lance le thread du train
     threads.emplace_back(&train::rouler, &le_train);
 
 
