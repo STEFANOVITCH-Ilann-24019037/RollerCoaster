@@ -20,6 +20,7 @@ private:
     u_char capa;
     u_char nbTours;
     string nom;
+    inline static binary_semaphore voie{1};  // une seule voie pour tous les trains
 
     //ici on utilise la template de c++20 qui gère les condition
     counting_semaphore<500> attente_quai{0};
@@ -30,7 +31,6 @@ private:
     // combien de personnes sont montées ou descendues
     mutex mtx_compteurs;
     int boarders = 0;
-    int unboarders = 0;
 
 public:
     train(u_char capacite, u_char nbTours,string nom);
@@ -46,5 +46,22 @@ public:
     void attendre_fin_tour();
     void passager_descendu();
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #endif

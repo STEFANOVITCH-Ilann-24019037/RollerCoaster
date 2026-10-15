@@ -9,6 +9,7 @@
 using namespace std;
 
 int main() {
+
     cout << "          TRAIN DE LA HYYYYYYYYYYYYYPE EN AVANT !!        " << endl;
 
 
@@ -22,7 +23,7 @@ int main() {
     vector<voyageur> voyageurs;
     deque<train> trains ;
 
-    voyageurs.reserve(NB_VOYAGEURS);
+
     for (u_char i = 0; i < NB_TRAINS; ++i) {
         trains.emplace_back(CAPACITE, NB_TOURS, "train " + to_string(i + 1));
     }
@@ -51,3 +52,15 @@ int main() {
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+

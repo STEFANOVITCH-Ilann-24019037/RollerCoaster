@@ -10,7 +10,9 @@ train::train(u_char capacite, u_char tours, string nom) : eta(EtatTrain::UNLOAD)
 void train::rouler() {
     for (u_char i = 0; i < nbTours; i++) {
         load();
+        voie.acquire();
         run();
+        voie.release();
         unload();
     }
     cout << "\n[WaiFada Corporation] Fin de l'inauguration ! Le temps lui-même est confus." << endl;
@@ -50,7 +52,6 @@ void train::passager_monte() {
     boarders++;
     if (boarders == capa) {
         train_plein.release();
-        boarders = 0;
     }
 }
 
@@ -60,9 +61,9 @@ void train::attendre_fin_tour() {
 
 void train::passager_descendu() {
     lock_guard<mutex> lock(mtx_compteurs);
-    unboarders++;
-    if (unboarders == capa) {
+    boarders--;
+    if (boarders == 0) {
         train_vide.release();
-        unboarders = 0;
+
     }
 }
