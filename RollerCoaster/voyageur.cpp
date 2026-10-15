@@ -13,7 +13,7 @@ void voyageur::board() {
 
 void voyageur::unboard() {
     etat = EtatVoyageur::Unboard;
-    cout << "[VOYAGEUR] " << nom << " a survécu à l'expérience et descend, titubant." << endl;
+    cout << "[VOYAGEUR] " << nom << " a survécu à l'expérience et descend." << endl;
 }
 
 void voyageur::vivre(train& le_train) {
